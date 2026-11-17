@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin – NISU Legends</title>
+<link rel="stylesheet" href="vote.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- Shown to signed-in users who are not admins -->
+<div class="wrap" id="denied" hidden>
+  <section class="stage denied">
+    <h1>Admins only</h1>
+    <p>This account isn’t an admin. To make it one, open Firebase Console → Firestore → create the collection <b>admins</b> and add a document whose ID is the UID below.</p>
+    <p class="uid" id="deniedUid"></p>
+    <div class="nav"><a class="btn primary" href="vote.html">Back to voting</a><button class="btn" id="logout2" type="button">Log out</button></div>
+  </section>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header class="topbar">
+    <div class="logo">
+      <svg viewBox="0 0 48 48" width="46" height="46" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB894"/><stop offset="1" stop-color="#DC586D"/></linearGradient></defs>
+        <path d="M24 2 43 12v24L24 46 5 36V12z" fill="url(#lg)"/>
+        <path d="M24 6.5 39.5 14.5v19L24 41.5 8.5 33.5v-19z" fill="#4C1D3D"/>
+        <path d="M16.5 32.5v-17l15 17v-17" fill="none" stroke="#FFB894" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text"><b>NISU</b><small>LEGENDS</small></span>
+      <span class="tag">Admin</span>
+    </div>
+    <div class="nav">
+      <a class="btn" href="vote.html">Voting page</a>
+      <button class="btn" id="logout" type="button">Log out</button>
+    </div>
+  </header>
+
+  <p class="banner" id="err" role="alert" hidden></p>
+
+  <!-- Voting switch -->
+  <section class="stage control" aria-label="Voting control">
+    <div>
+      <h1 class="title">Voting control</h1>
+      <p class="muted">Status: <span class="pill on" id="pill">OPEN</span></p>
+    </div>
+    <div class="nav">
+      <button class="btn primary" id="toggle" type="button">Turn voting OFF</button>
+      <button class="btn danger" id="reset" type="button">Reset all votes</button>
+    </div>
+  </section>
+
+  <!-- Overview numbers -->
+  <section class="kpis" aria-label="Overview">
+    <div class="kpi"><small>Registered users</small><b id="kUsers">0</b></div>
+    <div class="kpi"><small>Votes cast</small><b id="kVotes">0</b></div>
+    <div class="kpi"><small>Participation</small><b id="kPart">0%</b></div>
+    <div class="kpi"><small>Leading hero</small><b id="kLead">—</b></div>
+  </section>
+
+  <!-- Graph -->
+  <section class="stage" aria-label="Votes chart">
+    <div class="stage-head"><div><h2 class="title">Votes chart</h2><p>Live results per hero.</p></div></div>
+    <div class="chart" id="chart" role="img" aria-label="Votes per hero"></div>
+  </section>
+
+  <section class="stage" aria-label="Next revamp poll">
+    <div class="stage-head"><div><h2 class="title">Revamp next poll</h2><p>Results of “What do you want to revamp next?”</p></div></div>
+    <div class="tiles">
+      <div class="tile static"><b>HERO</b><small id="nHero">0 votes</small></div>
+      <div class="tile static"><b>WEAPONS</b><small id="nWeapons">0 votes</small></div>
+      <div class="tile static"><b>EVENTS</b><small id="nEvents">0 votes</small></div>
+    </div>
+  </section>
+
+  <!-- Users -->
+  <section class="stage" aria-label="Users overview">
+    <div class="stage-head">
+      <div><h2 class="title">Users overview</h2><p>Everyone who registered, and who they voted for.</p></div>
+      <input id="search" class="search" type="search" placeholder="Search name, email, ID, server" aria-label="Search users">
+    </div>
+    <div class="chips" id="servers"></div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>Username</th><th>Email</th><th>In-game ID</th><th>Server</th><th>Mobile</th>
+          <th>Gender</th><th>Address</th><th>Voted for</th><th>Joined</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<p class="toast" id="toast" role="status" hidden></p>
+<script type="module" src="admin.js"></script>
+</body>
+</html>
